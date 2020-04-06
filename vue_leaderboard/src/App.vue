@@ -3,13 +3,14 @@
     <v-app-bar color="primary" dark app class='title'>
       <v-toolbar-title>Hmcomm Data Science Competition #1</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn x-large color="success" >Submmit</v-btn>
+      <v-btn x-large color="success" >Submit</v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
         <v-list-item-title class="title grey--text text--darken-2" align='center' style='margin-top: 30px'>
           Leaderboard
         </v-list-item-title>
+        <v-file-input @change='fileChange' label='submission' accept='.csv' ></v-file-input>
         <v-data-table
           :headers="headers" 
           :items="desserts" 
@@ -17,7 +18,7 @@
           :sort-by.sync='sortBy' 
           :sort-desc.sync='sortDesc' 
           class="elevation-1 category-table"
-          style="margin-left: 300px; margin-right: 300px; margin-top: 50px" >
+          style="margin-left: 100px; margin-right: 100px; margin-top: 50px" >
         </v-data-table>
       </v-container>
     </v-content>
@@ -63,22 +64,19 @@
             n_submission: 16.0,
             date: 23,
           },
-          {
-            rank: 4,
-            name: 'D',
-            score: 505,
-            n_submission: 3.7,
-            date: 67,
-          },
-          {
-            rank: 5,
-            name: 'E',
-            score: 356,
-            n_submission: 16.0,
-            date: 49,
-          },
         ],
       }
     },
+	methods: {
+	  to_api(){
+		console.log('----- begin vue -----')
+		axios.post('http://127.0.0.1:5003/myapi', {
+		  arg01: this.msg
+		})
+		.then((response) => {
+		  this.msg = response.data.after_api
+		})
+	  }
+	}
   }
 </script>
