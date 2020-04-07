@@ -8,9 +8,9 @@
     <v-content>
       <v-container>
         <v-list-item-title class="title grey--text text--darken-2" align='center' style='margin-top: 30px'>
-          Leaderboard
+          Leaderboard {{msg}}
         </v-list-item-title>
-        <v-file-input @change='fileChange' label='submission' accept='.csv' ></v-file-input>
+        <v-file-input @change='to_api' label='submission' accept='.csv' ></v-file-input>
         <v-data-table
           :headers="headers" 
           :items="desserts" 
@@ -25,9 +25,12 @@
   </v-app>
 </template>
 <script>
+import axios from 'axios'
   export default {
     data () {
       return {
+        msg: '',
+        csvData: '',
         sortBy: 'rank',
         sortDesc: false,
         headers: [
@@ -67,16 +70,35 @@
         ],
       }
     },
-	methods: {
-	  to_api(){
-		console.log('----- begin vue -----')
-		axios.post('http://127.0.0.1:5003/myapi', {
-		  arg01: this.msg
-		})
-		.then((response) => {
-		  this.msg = response.data.after_api
-		})
-	  }
-	}
+    methods: {
+      readFileAsync (file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => {
+            resolve(reader.result)
+          }
+          reader.onerror = reject
+          reader.readAsText(file)
+        })
+      },
+      async to_api(file){
+        console.log('---- in vue ----')
+        try {
+          const csv = await this.readFileAsync(file)
+          this.csvData = csv
+        } catch (e) {
+          console.log(e)
+        }
+
+        // POST
+        axios.post('http://127.0.0.1:5003/myapi', {
+          arg01: this.csvData
+        })
+        .then((response) => {
+          this.msg = response.data.score
+        })
+        console.log('---- out vue ----')
+      }
+    }
   }
 </script>
