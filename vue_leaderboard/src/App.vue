@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-app-bar color="primary" dark app class='title'>
-      <v-toolbar-title>Hmcomm Data Science Competition #1</v-toolbar-title>
+      <v-toolbar-title>Data Science Competition #1</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn x-large color="success" >Submit</v-btn>
+      <v-btn x-large color="success"  @click='getRankingTable'>Submit</v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -13,12 +13,15 @@
         <v-file-input @change='to_api' label='submission' accept='.csv' ></v-file-input>
         <v-data-table
           :headers="headers" 
-          :items="desserts" 
-          :items-per-page="5" 
-          :sort-by.sync='sortBy' 
-          :sort-desc.sync='sortDesc' 
+          :items="participants" 
+          :items-per-page="10" 
           class="elevation-1 category-table"
           style="margin-left: 100px; margin-right: 100px; margin-top: 50px" >
+          <template slot="items" slot-scope="props">
+            <td class="text-xs-right">{{ props.item.code }}</td>
+            <td class="text-xs-right">{{ props.item.name }}</td>
+            <td class="text-xs-right">{{ props.item.workerType }}</td>
+          </template>
         </v-data-table>
       </v-container>
     </v-content>
@@ -30,7 +33,9 @@ import axios from 'axios'
     data () {
       return {
         msg: '',
+        hello: '',
         csvData: '',
+        rankingTable: '',
         sortBy: 'rank',
         sortDesc: false,
         headers: [
@@ -43,29 +48,25 @@ import axios from 'axios'
           { text: 'Name', value: 'name'},
           { text: 'Score', value: 'score'},
           { text: 'N_Submission', value: 'n_submission' },
-          { text: 'Date', value: 'date' },
         ],
-        desserts: [
+        participants: [
           {
             rank: 1,
             name: 'A',
             score: 159,
             n_submission: 6.0,
-            date: 24,
           },
           {
             rank: 2,
             name: 'B',
             score: 237,
             n_submission: 9.0,
-            date: 37,
           },
           {
             rank: 3,
             name: 'C',
             score: 262,
             n_submission: 16.0,
-            date: 23,
           },
         ],
       }
@@ -89,15 +90,42 @@ import axios from 'axios'
         } catch (e) {
           console.log(e)
         }
-
         // POST
-        axios.post('http://127.0.0.1:5003/myapi', {
+        axios.post('http://127.0.0.1:5003/get_score', {
           arg01: this.csvData
         })
         .then((response) => {
           this.msg = response.data.score
         })
         console.log('---- out vue ----')
+      },
+      getRankingTable(){
+        console.log('func-↓rankingTable')
+        // POST
+        axios.post('http://127.0.0.1:5003/get_ranking_table', {
+        })
+        .then((response) => {
+          this.rankingTable = response.data.ranking_table
+        })
+        console.log(this.rankingTable)
+        // console.log(this.rankingTable)
+        this.rankingUpdate()
+      },
+      rankingUpdate() {
+        console.log('func-↓rankingUpdate')
+        const participants = [];
+        const lines = this.rankingTable.split("\n");
+        lines.forEach(element => {
+          const participantsData = element.split(",");
+          const participant = {
+            rank: participantsData[0],
+            name: participantsData[1],
+            score: participantsData[2],
+            n_submission: participantsData[3]
+          };
+          participants.push(participant);
+        });
+        this.participants = participants;
       }
     }
   }
