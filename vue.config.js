@@ -8,9 +8,15 @@
 //   outputDir: '../docs'
 // }
 
-
 module.exports = {
-  outputDir: 'docs',
-  assetsDir: './',
-  publicPath: './'
-}
+  outputDir: "docs",
+  // assetsDir: "./",
+  publicPath: "./",
+  assetsDir: "",
+};
+
+// module.exports = {
+//   outputDir: 'docs',
+//   assetsDir: './',
+//   publicPath: './'
+// }
