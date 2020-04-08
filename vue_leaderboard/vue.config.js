@@ -1,5 +1,9 @@
+// module.exports = {
+//   "transpileDependencies": [
+//     "vuetify"
+//   ]
+// }
 module.exports = {
-  "transpileDependencies": [
-    "vuetify"
-  ]
+  publicPath: 'kagglelike-leaderboard',
+  outputDir: 'docs'
 }
