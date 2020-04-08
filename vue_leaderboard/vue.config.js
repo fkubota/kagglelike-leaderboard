@@ -5,5 +5,5 @@
 // }
 module.exports = {
   publicPath: 'kagglelike-leaderboard',
-  outputDir: 'docs'
+  outputDir: '../docs'
 }
