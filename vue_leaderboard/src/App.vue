@@ -113,19 +113,19 @@ import axios from 'axios'
       async getScore(){
         console.log('func-↓getScore')
         // POST
-        axios.post('http://127.0.0.1:5003/get_score', {
+        await axios.post('http://127.0.0.1:5003/get_score', {
           arg_subData: this.subData,
           arg_selection_name: this.selection_name,
         })
         .then((response) => {
           this.score = response.data.score
+          this.getRankingTable()
         })
-        this.updateRankingTable()
       },
-      getRankingTable(){
+      async getRankingTable(){
         console.log('func-↓getRankingTable')
         // POST
-        axios.post('http://127.0.0.1:5003/get_ranking_table', {
+        await axios.post('http://127.0.0.1:5003/get_ranking_table', {
         })
         .then((response) => {
           this.rankingTable = response.data.ranking_table
@@ -150,10 +150,10 @@ import axios from 'axios'
         });
       },
     },
-    mounted () {
+    // mounted () {
+    created () {
       console.log('func-↓mounted')
       console.log(this.participants)
-      this.getRankingTable()
       this.getRankingTable()
     }
   }
