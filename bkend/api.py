@@ -16,21 +16,21 @@ parser.add_argument("arg_selection_name")
 
 class GetScore(Resource):
     def post(self):
-        print('--- in api get_score---')
+        # print('--- in api get_score---')
         args = parser.parse_args()
         sub_data = args['arg_subData']
         selection_name = args['arg_selection_name']
         score = util.tell_me_score(sub_data)
         util.update_participants_data(selection_name, score)
-        print('--- out api get_score ---')
+        # print('--- out api get_score ---')
         return {"score": round(score, 3)}
 
 
 class GetRankingTable(Resource):
     def post(self):
-        print('--- in api get_ranking_table ---')
+        # print('--- in api get_ranking_table ---')
         json_str = util.get_ranking_table()
-        print('--- out api get_ranking_table ---')
+        # print('--- out api get_ranking_table ---')
         return {'ranking_table': json_str}
 
 

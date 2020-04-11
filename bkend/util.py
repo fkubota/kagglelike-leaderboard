@@ -4,7 +4,6 @@ import pandas as pd
 import pathlib
 import json
 import numpy as np
-import time
 
 PATH_RANKING_TABLE = '../data/ranking_table.csv'
 PATH_PARTICIPANTS_DATA = '../data/participant.json'
@@ -42,7 +41,6 @@ def text2df(text):
 
 
 def update_participants_data(name, score):
-    print('------hooooooooooooooooooooo')
     score = round(score, 3)
     # fp = open(PATH_PARTICIPANTS_DATA, 'r')
     # j = json.load(fp)  # str読み込み
