@@ -1,4 +1,4 @@
-# vue_leaderboard
+# kagglelike-leaderboard
 
 ローカルで動かすようです。  
 本番環境(このリポジトリとは関係ないですが)は、githubpages で vue を使って、
