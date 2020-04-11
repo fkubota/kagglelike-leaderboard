@@ -5,7 +5,7 @@
 バックエンドは heroku にflask api を用意しました。
 heroku は無料でデータベース(postgreSQL)も使えるので利用しました。
 
-<img src="data/kagglelike-leaderboard.gif" width="200">
+<img src="data/kagglelike-leaderboard.gif" width="800">
 
 ## 実行
 1. cd kagglelike-leaderboard/
