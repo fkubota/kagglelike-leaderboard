@@ -1,11 +1,14 @@
 # kagglelike-leaderboard
 
+<img src="data/kagglelike-leaderboard.gif" width="800">  
 ローカルで動かすようです。  
 本番環境(このリポジトリとは関係ないですが)は、githubpages で vue を使って、
 バックエンドは heroku にflask api を用意しました。
 heroku は無料でデータベース(postgreSQL)も使えるので利用しました。
 
-<img src="data/kagglelike-leaderboard.gif" width="800">
+- 本番環境イメージ
+<img src="data/kagglelike-leaderboard.png" width="800">  
+
 
 ## 実行
 1. cd kagglelike-leaderboard/
